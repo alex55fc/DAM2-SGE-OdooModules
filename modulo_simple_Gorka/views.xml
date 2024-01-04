@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<record id="cliente_action" model="ir.actions.act_window">
+		<field name="name">Action cliente</field>
+		<field name="res_model">salesianos.cliente</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+
+	<record id="vendedor_action" model="ir.actions.act_window">
+		<field name="name">Action vendedor</field>
+		<field name="res_model">salesianos.vendedor</field>
+		<field name="view_mode">tree,form,calendar</field>
+	</record>
+
+	<record id="proveedor_action" model="ir.actions.act_window">
+		<field name="name">Action proveedor</field>
+		<field name="res_model">salesianos.proveedor</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+
+	<record id="base_action" model="ir.actions.act_window">
+		<field name="name">Action base</field>
+		<field name="res_model">salesianos.base</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+
+	<record id="color_action" model="ir.actions.act_window">
+		<field name="name">Action color blind</field>
+		<field name="res_model">salesianos.colorblind</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+
+	<record id="view_colorblind_tree" model="ir.ui.view">
+		<field name="name">colorblind.tree</field>
+		<field name="model">salesianos.colorblind</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="name" />
+				<field name="color" />
+				<field name="color_cmyk" />
+				<field name="color_blind" />
+			</tree>
+		</field>
+	</record>
+
+	<record id="view_base_tree" model="ir.ui.view">
+		<field name="name">base.tree</field>
+		<field name="model">salesianos.base</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="name" />
+				<field name="color" />
+				<field name="color_cmyk" />
+			</tree>
+		</field>
+	</record>
+
+	
+
+
+	<record id="view_cliente_tree" model="ir.ui.view" >
+		<field name="name">cliente.tree</field>
+		<field name="model">salesianos.cliente</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="name"/>
+				<field name="email"/>
+				<field name="phone"/>
+				<field name="edad"/>
+				<field name="altura"/>
+				<field name="peso"/>
+				<field name="imc"/>
+				<field name="proveedor" widget="many2many_tags" />
+			</tree>
+		</field>
+	</record>
+	<record id="view_vendedor_tree" model="ir.ui.view" >
+		<field name="name">vendedor.tree</field>
+		<field name="model">salesianos.vendedor</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="name"/>
+				<field name="company"/>
+				<field name="fecha_incorporacion"/>
+				<field name="fecha_despido"/>
+			</tree>
+		</field>
+	</record>
+	<record id="view_proveedor_tree" model="ir.ui.view" >
+		<field name="name">proveedor.tree</field>
+		<field name="model">salesianos.proveedor</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="name"/>
+				<field name="cif"/>
+				<field name="titular"/>
+				<field name="tipo" />
+			</tree>
+		</field>
+	</record>
+
+	<record id="cliente_form" model="ir.ui.view" >
+		<field name="name">field_value</field>
+		<field name="model">salesianos.cliente</field>
+		
+		<field name="arch" type="xml">
+			<form string="cliente">
+				<sheet>
+					<group>
+						<field name="name"/>
+						<field name="email"/>
+						<field name="phone"/>
+						<field name="edad"/>
+						<field name="altura"/>
+						<field name="peso"/>
+						<field name="imc"/>
+						<field name="proveedor" />
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<record id="vendedor_calendar" model="ir.ui.view" >
+		<field name="name">field_value</field>
+		<field name="model">salesianos.vendedor</field>
+		<field name="arch" type="xml">
+			<calendar string="vendedor" date_start="fecha_incorporacion" date_stop="fecha_despido">
+				<field name="name"/>
+				<field name="company"/>
+			</calendar>
+		</field>
+	</record>
+
+<!--add search view for vendedor-->
+	<record id="vendedor_search" model="ir.ui.view">
+		<field name="name">vendedor.search</field>
+		<field name="model">salesianos.vendedor</field>
+		<field name="arch" type="xml">
+			<search string="vendedor">
+				<field name="name" />
+				<field name="company" />
+				<field name="fecha_incorporacion" />
+				<filter name="despedidos" string="despedidos" domain="[('fecha_despido', '&lt;', datetime.date.today())]"  />
+				<group string="Zona de agrupamientos">
+					<filter name="agrupar por empresa"
+							string="agrupar por empresa"
+							context="{'group_by':'company'}"/>
+				</group>
+			</search>
+		</field>
+	</record>
+
+	
+
+	<!--Definir los menuitems al final-->
+	<menuitem
+		id="compras"
+		name="compras"
+		sequence="10"/>
+	<menuitem
+		id="cliente"
+		name="cliente"
+		action="cliente_action"
+		parent="compras"
+		sequence="10"/>
+	<menuitem
+		id="vendedor"
+		name="vendedor"
+		action="vendedor_action"
+		parent="compras"
+		sequence="10"/>
+	<menuitem
+		id="proveedor"
+		name="proveedor"
+		action="proveedor_action"
+		parent="compras"
+		sequence="10"/>
+	<menuitem
+		id="base"
+		name="base"
+		action="base_action"
+		parent="compras"
+		sequence="10"/>
+	<menuitem
+		id="colorblind"
+		name="colorblind"
+		action="color_action"
+		parent="compras"
+		sequence="10"/>
+
+</odoo>

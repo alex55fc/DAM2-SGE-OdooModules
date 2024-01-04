@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<!--Esto es para -->
+	<record id="alumno_action" model="ir.actions.act_window">
+		<field name="name">Action alumno</field>
+		<field name="res_model">salesianos.alumno</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+	<record id="profesor_action" model="ir.actions.act_window">
+		<field name="name">Action profesor</field>
+		<field name="res_model">salesianos.profesor</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+
+	<!--Ahora las vistas-->
+	<record id="view_alumno_tree" model="ir.ui.view">
+		<field name="name">alumno.tree</field>
+		<field name="model">salesianos.alumno</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="name"/>
+				<field name="email"/>
+				<field name="phone"/>
+				<field name="edad"/>
+				<field name="id"/>
+
+				<field name="profesor"/>
+
+				<!--Solo las relaciones many2many necesitan una linea de este estilo en una de las 2 clases relacionadas
+				<field name="proveedor" widget="many2many_tags" />-->
+			</tree>
+		</field>
+	</record>
+
+	<record id="view_profesor_tree" model="ir.ui.view">
+		<field name="name">profesor.tree</field>
+		<field name="model">salesianos.profesor</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="name"/>
+				<field name="email"/>
+				<field name="phone"/>
+				<field name="edad"/>
+
+				<field name="alumno"/>
+
+			</tree>
+		</field>
+	</record>
+
+	<!--Ahora los formularios-->
+	<record id="alumno_form" model="ir.ui.view">
+		<field name="name">field_value</field>
+		<field name="model">salesianos.alumno</field>
+		<field name="arch" type="xml">
+			<form string ="alumno">
+				<sheet>
+					<group>
+						<field	name="name"/>
+						<field	name="email"/>
+						<field	name="phone"/>
+						<field	name="edad"/>
+						<field	name="id"/> 
+
+						<field  name="profesor"/>
+
+					<!--Solo las relaciones many2many necesitan una linea de este estilo en una de las 2 clases relacionadas
+						<field name="proveedor" /> -->
+			
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<record id="profesor_form" model="ir.ui.view">
+		<field name="name">field_value</field>
+		<field name="model">salesianos.profesor</field>
+		<field name="arch" type="xml">
+			<form string ="profesor">
+				<sheet>
+					<group>
+						<field	name="name"/>
+						<field	name="email"/>
+						<field	name="phone"/>
+						<field	name="edad"/>
+						 
+						<field  name="alumno"/>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+
+	<!--Menu de la parte superior, definir al final de la vista SIEMPRE-->
+	<!--esto es como lo encontraremos en apps(name), el id sera para referirse a este menuitem-->
+	<menuitem 
+		id="Modulo_prueba_alex"
+		name="Modulo_prueba_alex"
+		sequence="10"/>
+
+	<!--parent es para buscar la referencia del menuitem principal-->
+	<menuitem 
+		id="alumno"
+		name="alumno"
+		action="alumno_action"
+		parent="Modulo_prueba_alex"
+		sequence="10"/>
+	<menuitem 
+		id="profesor"
+		name="profesor"
+		action="profesor_action"
+		parent="Modulo_prueba_alex"
+		sequence="10"/>
+	
+</odoo>

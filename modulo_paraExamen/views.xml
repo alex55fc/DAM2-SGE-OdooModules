@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<!--Esto es para Action-->
+	<!--tener en cuenta la vista del calendario-->
+	<record id="compradores_action" model="ir.actions.act_window">
+		<field name="name">Action compradores</field>
+		<field name="res_model">compradores</field>
+		<field name="view_mode">tree,form,calendar</field>
+	</record>
+	<record id="vendedores_action" model="ir.actions.act_window">
+		<field name="name">Action vendedores</field>
+		<field name="res_model">vendedores</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+	<record id="proveedores_action" model="ir.actions.act_window">
+		<field name="name">Action proveedores</field>
+		<field name="res_model">proveedores</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+
+	<!--Ahora las vistas-->
+	<record id="view_compradores_tree" model="ir.ui.view" >
+		<field name="name">compradores.tree</field>
+		<field name="model">compradores</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="name"/>
+				<field name="email"/>
+				<field name="phone"/>
+				<field name="id"/>
+				<field name="edad"/>
+			</tree>
+		</field>
+	</record>
+
+	<record id="view_proveedores_tree" model="ir.ui.view" >
+		<field name="name">proveedores.tree</field>
+		<field name="model">proveedores</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="name"/>
+				<field name="email"/>
+				<field name="phone"/>
+				<field name="id"/>
+				<field name="tipo"/>
+			</tree>
+		</field>
+	</record>
+
+	<record id="view_vendedores_tree" model="ir.ui.view" >
+		<field name="name">vendedores.tree</field>
+		<field name="model">vendedores</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="name"/>
+				<field name="email"/>
+				<field name="phone"/>
+				<field name="altura"/>
+				<field name="peso"/>
+				<field name="imc"/>
+				<!--Ponemos esto ya que es una realcionmany2many, en las otras relacioners no se pone-->
+				<field name="proveedores" widget="many2many_tags"/>
+			</tree>
+		</field>
+	</record>
+
+	<!--Calendario de COMPRADORES-->
+	<record id="compradores_calendar" model="ir.ui.view" >
+		<field name="name">field_value</field>
+		<field name="model">compradores</field>
+		<field name="arch" type="xml">
+			<calendar string="compradores" date_start="fecha_incorporacion" date_stop="fecha_despido">
+				<field name="name"/>
+				<field name="email"/>
+				<field name="phone"/>
+				<field name="id"/>
+				<field name="edad"/>
+			</calendar>
+		</field>
+	</record>
+
+	<!--Ahora los formularios-->
+
+
+	<!--Menu de la parte superior, definir al final de la vista SIEMPRE-->
+	<!--esto es como lo encontraremos en apps(name), el id sera para referirse a este menuitem-->
+	<menuitem 
+		id="Modulo_ParaExamen_alex"
+		name="Modulo_ParaExamen_alex"
+		sequence="10"/>
+
+	<!--parent es para buscar la referencia del menuitem principal-->
+	<menuitem 
+		id="compradores"
+		name="compradores"
+		action="compradores_action"
+		parent="Modulo_ParaExamen_alex"
+		sequence="10"/>
+	<menuitem 
+		id="vendedores"
+		name="vendedores"
+		action="vendedores_action"
+		parent="Modulo_ParaExamen_alex"
+		sequence="10"/>
+	<menuitem 
+		id="proveedores"
+		name="proveedores"
+		action="proveedores_action"
+		parent="Modulo_ParaExamen_alex"
+		sequence="10"/>
+	
+</odoo>
